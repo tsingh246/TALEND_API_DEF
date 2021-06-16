@@ -1,0 +1,116 @@
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "Movie catalog API",
+    "description" : "Sample API for movie catalog",
+    "contact" : {
+      "name" : "Tej Singh",
+      "email" : "tsingh@talend.com"
+    },
+    "version" : "1.0.0"
+  },
+  "servers" : [ {
+    "url" : "https://88834c4.us.api-mocks.com",
+    "description" : "This is your API mock endpoint. When called, it will simulate the behavior of your API."
+  }, {
+    "url" : "http://127.0.0.1:8090"
+  } ],
+  "paths" : {
+    "/movies" : {
+      "get" : {
+        "summary" : "Get a list of movies",
+        "description" : "Returns a list of movies available for rental",
+        "operationId" : "getMovies",
+        "responses" : {
+          "200" : {
+            "description" : "Status 200",
+            "content" : {
+              "application/xml" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Movie"
+                  }
+                },
+                "example" : "<movies>\n  <movie>\n    <movieId>1</movieId>\n    <title>The Social Network</title>\n    <releaseYear>2010</releaseYear>\n    <director>David Fincher</director>\n    <price>4.99</price>\n  </movie>\n  <movie>\n    <movieId>2</movieId>\n    <title>La La Land</title>\n    <releaseYear>2016</releaseYear>\n    <director>Damien Chazelle</director>\n    <price>5.99</price>\n  </movie>\n  <movie>\n    <movieId>3</movieId>\n    <title>Ex Machine</title>\n    <releaseYear>2014</releaseYear>\n    <director>Alex Garland</director>\n    <price>4.99</price>\n  </movie>\n</movies>"
+              }
+            }
+          }
+        }
+      },
+      "post" : {
+        "summary" : "Add a movie",
+        "description" : "Add a new movie to the catalog.",
+        "operationId" : "addMovie",
+        "requestBody" : {
+          "content" : {
+            "application/xml" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Movie"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Status 200"
+          }
+        }
+      }
+    },
+    "/movies/{movieId}" : {
+      "get" : {
+        "summary" : "Get information about a movie",
+        "description" : "Returns information about a specific movie.",
+        "operationId" : "getMovieById",
+        "responses" : {
+          "200" : {
+            "description" : "Status 200",
+            "content" : {
+              "application/xml" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Movie"
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters" : [ {
+        "name" : "movieId",
+        "in" : "path",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      } ]
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "Movie" : {
+        "type" : "object",
+        "required" : [ "movieId", "price", "releaseYear", "title" ],
+        "description" : "Movie reprersentation",
+        "properties" : {
+          "movieId" : {
+            "type" : "integer"
+          },
+          "title" : {
+            "type" : "string"
+          },
+          "releaseYear" : {
+            "type" : "integer"
+          },
+          "director" : {
+            "type" : "number"
+          },
+          "price" : {
+            "type" : "string"
+          }
+        },
+        "example" : "<movie>\n    <movieId>1</movieId>\n    <title>The Social Network</title>\n    <releaseYear>2010</releaseYear>\n    <director>David Fincher</director>\n    <price>4.99</price>\n</movie>"
+      }
+    }
+  }
+}
